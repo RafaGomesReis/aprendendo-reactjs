@@ -1,15 +1,22 @@
 "use client"
 
-import { Header } from "@/components/Header";
-import { CountContext, CountProvider } from "@/contexts/CountContext";
-import { useState } from "react";
+import { useEffect } from "react";
 
 const Page = () =>{
+
+  useEffect(() =>{
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res => res.json())
+    .then(json => {
+      console.log(json);
+    })
+
+
+  }, []);
+
     return (
       <div className="container mx-auto">
-        <CountProvider>
-          <Header/>
-        </CountProvider>
+        <h1 className="text-3xl ">Lista de usuários</h1>
       </div>
     );
 };
