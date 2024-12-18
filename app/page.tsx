@@ -8,20 +8,35 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
 
-  useEffect(() => {
+  const getUsers = async() => {
+    try{
     setLoading(true);
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((res) => res.json())
-      .then((json) => {
-        setLoading(false);
-        setUsers(json);
-      })
-      .catch(() => {
-        console.log("error 404");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    const res = await fetch("https://jsonplaceholder.typicode.com/users");
+    const json = await res.json();
+    setUsers(json);
+  
+    } catch (err) {
+      console.log("failed totall");
+    }
+    setLoading(false);
+  }
+
+
+  useEffect(() => {
+    getUsers();
+    // setLoading(true);
+    // fetch("https://jsonplaceholder.typicode.com/users")
+    //   .then((res) => res.json())
+    //   .then((json) => {
+    //     setLoading(false);
+    //     setUsers(json);
+    //   })
+    //   .catch(() => {
+    //     console.log("error 404");
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   }, []);
 
   return (
