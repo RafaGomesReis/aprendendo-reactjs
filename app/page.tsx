@@ -3,14 +3,11 @@
 import { User } from "@/types/User";
 import { useEffect, useRef, useState } from "react";
 import { serialize } from "v8";
-import axios from 'axios';
+import { api } from "./api";
+import Page2 from "./page2";
 
 const Page = () => {
-
-
-
-
-
+  
   const [legendInput, setLegendInput] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -48,22 +45,28 @@ const Page = () => {
         sort: 'desc'
 
       }
-      axios.get('https://jsonplaceholder.typicode.com/comments?postId=1', {
-        params: requestParams
-      })
+      // axios.get('https://jsonplaceholder.typicode.com/comments?postId=1', {
+      //   params: requestParams
+      // })
 
-      .then((response)=> {
+      // .then((response)=> {
 
-        console.log(response.data);
-      })
+      //   console.log(response.data);
+      // })
     }
 
     const handleAddPost = async () => {
-      const response = await axios.post('https://jsonplaceholder.typicode.com/posts', {
-        userId: 98,
-        title: 'titulo do Post',
-        body: 'corpo do Post'
-      })
+      const response = await api.post('/posts', 
+         {
+          userId: 98,
+          title: 'titulo do Post',
+          body: 'corpo do Post'
+        })
+
+
+      
+
+
 
       if(response.data.id){
         console.log('inseriu bonitin')
@@ -72,7 +75,7 @@ const Page = () => {
       }
     }
     const handleAddPut = async () => {
-      const response = await axios.put('https://jsonplaceholder.typicode.com/posts', {
+      const response = await api.post('/posts', {
         userId: 98,
         title: 'titulo do Post',
         body: 'corpo do Post'
@@ -90,6 +93,7 @@ const Page = () => {
 
 
   return (
+    
     <div className="container mx-auto ">
       <button onClick={handleAddPost}>Adicionar Post</button>
       <button onClick={handleAddPut}>Adicionar Post</button>
@@ -110,8 +114,11 @@ const Page = () => {
         />
         <button onClick={HandleFileSend}>Enviar imagem</button>
       </div>
+      <div><Page2/></div>
     </div>
+    
   );
 };
+
 
 export default Page;
